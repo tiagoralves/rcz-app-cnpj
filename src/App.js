@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef, useState } from 'react'
+import './App.css'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 function App() {
+  const recaptcha = useRef()
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Sign up for Newsletter</h1>
+      <form>
+        <input
+          name="Email"
+          type={'email'}
+          value={email}
+          required
+          placeholder="joe@example.com"
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        <input
+          name="Name"
+          type={'name'}
+          value={name}
+          required
+          placeholder="Joe"
+          onChange={(event) => setName(event.target.value)}
+        />
+        <button type="submit">Sign up</button>
+        <ReCAPTCHA ref={recaptcha} sitekey={process.env.REACT_APP_SITE_KEY} />
+      </form>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
