@@ -18,6 +18,19 @@ app.post('/verify', async (request, response) => {
   response.send(data)
 })
 
+// Rota para consultar dados de um CNPJ
+app.get('/cnpj/:cnpj', async (request, response) => {
+  const { cnpj } = request.params;
+  try {
+    const url = `https://receitaws.com.br/v1/cnpj/${cnpj}`;
+    const { data } = await axios.get(url);
+    response.json(data);
+  } catch (error) {
+    console.error('Erro ao buscar dados do CNPJ:', error);
+    response.status(500).json({ message: "Erro interno no servidor" });
+  }
+})
+
 app.listen(port, () => {
   console.log(`Server listening at ${port}`)
 })

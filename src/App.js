@@ -5,7 +5,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 function App() {
   const recaptcha = useRef();
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [cnpj, setCnpj] = useState('');
 
   async function submitForm(event) {
     event.preventDefault();
@@ -50,12 +50,12 @@ function App() {
           onChange={(event) => setEmail(event.target.value)}
         />
         <input
-          name="Name"
+          name="Cnpj"
           type="text"
-          value={name}
+          value={cnpj}
           required
           placeholder="Joe"
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event) => setCnpj(event.target.value)}
         />
         <button type="submit">Sign up</button>
         <ReCAPTCHA ref={recaptcha} sitekey={process.env.REACT_APP_SITE_KEY} />
