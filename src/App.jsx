@@ -4,9 +4,12 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 function App() {
   const recaptcha = useRef();
+  const cnpjInputRef = useRef();
   const [email, setEmail] = useState('');
   const [cnpj, setCnpj] = useState('');
-  const [cnpjData, setCnpjData] = useState(null); // Novo estado
+  const [cnpjData, setCnpjData] = useState(null);
+  const [isCnpjValid, setIsCnpjValid] = useState(true);
+
 
   const formatCNPJ = (value) => {
     const numbers = value.replace(/\D/g, '');
@@ -17,17 +20,76 @@ function App() {
       .replace(/(\d{4})(\d{1,2})$/, '$1-$2');
   };
 
+  const validateCNPJ = (cnpj) => {
+    cnpj = cnpj.replace(/[^\d]+/g,'');
+ 
+    if(cnpj == '') return false;
+     
+    if (cnpj.length != 14)
+        return false;
+ 
+    // Elimina CNPJs invalidos conhecidos
+    if (/^(\d)\1{13}$/.test(cnpj)) {
+    return false;
+}
+
+    // Valida DVs
+    let tamanho = cnpj.length - 2
+    let numeros = cnpj.substring(0,tamanho);
+    let digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
+            pos = 9;
+    }
+    let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(0))
+        return false;
+
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0,tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
+            pos = 9;
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(1))
+          return false;
+           
+    return true;
+  };
+
+
   const handleChange = (event) => {
-    const formattedCNPJ = formatCNPJ(event.target.value);
+    let formattedCNPJ = formatCNPJ(event.target.value);
     setCnpj(formattedCNPJ);
+      setIsCnpjValid(formattedCNPJ.length === 14 && validateCNPJ(formattedCNPJ));
   };
 
   async function submitForm(event) {
     event.preventDefault();
-    const captchaValue = recaptcha.current.getValue();
+    let captchaValue = recaptcha.current.getValue();
     if (!captchaValue) {
       alert('❗❗ Por favor assinale o campo de validação.');
     } else {
+      let cnpjQuery = cnpj.replace(/\D/g, '');
+      if (cnpjQuery.length !== 14) {
+        alert('❗❗ Por favor, insira um CNPJ válido com 14 dígitos.');
+        cnpjInputRef.current.focus();
+        return;
+      }
+
+      if (!validateCNPJ(cnpjQuery)) {
+        alert('❗❗ O CNPJ inserido é inválido. Por favor, insira um CNPJ válido.');
+        cnpjInputRef.current.focus();
+        return;
+      }
+
       try {
         const verifyResponse = await fetch('http://localhost:8000/verify', {
           method: 'POST',
@@ -39,13 +101,12 @@ function App() {
 
         const verifyData = await verifyResponse.json();
         if (verifyData.success) {
-          const cnpjQuery = cnpj.replace(/[^\d]+/g, '');
-          const res = await fetch(`http://localhost:8000/cnpj/${cnpjQuery}`);
-          const data = await res.json();
+          let res = await fetch(`http://localhost:8000/cnpj/${cnpjQuery}`);
+          let data = await res.json();
           if (res.ok) {
             console.log('Dados do CNPJ:', data);
-            setCnpjData(data); // Armazena os dados do CNPJ
-            alert('✅ Dados do CNPJ recebidos com sucesso!');
+            setCnpjData(data);
+            //alert('✅ Dados do CNPJ recebidos com sucesso!');
           } else {
             throw new Error(data.message || 'Erro ao buscar dados do CNPJ');
           }
@@ -67,7 +128,6 @@ function App() {
           name="Email"
           type="email"
           value={email}
-          //required
           placeholder="nome@example.com"
           onChange={(event) => setEmail(event.target.value)}
           inputMode="email"
@@ -80,22 +140,22 @@ function App() {
           placeholder="00.000.000/0000-00"
           onChange={handleChange}
           inputMode="tel"
+          ref={cnpjInputRef}
         />
+        {!isCnpjValid && (<p style={{ color: 'red' }}>CNPJ inválido. Por favor, insira um CNPJ válido.</p>)}
         <button type="submit">Pesquisar</button>
         <ReCAPTCHA ref={recaptcha} sitekey={process.env.REACT_APP_SITE_KEY} />
       </form>
       {cnpjData && (
         <div>
-          <h2>Informações do CNPJ</h2>
+          <h2>Informações do CNPJ: {cnpjData.cnpj}</h2>
           <p><strong>Nome:</strong> {cnpjData.nome}</p>
           <p><strong>Fantasia:</strong> {cnpjData.fantasia}</p>
           <p><strong>Abertura:</strong> {cnpjData.abertura}</p>
           <p><strong>Status:</strong> {cnpjData.status}</p>
-          <p><strong>Tipo:</strong> {cnpjData.tipo}</p>
           <p><strong>Telefone:</strong> {cnpjData.telefone}</p>
-          <p><strong>Email:</strong> {cnpjData.email}</p>
-          <p><strong>Atividade Principal:</strong> {cnpjData.atividade_principal[0].text}</p>
-          {/* Adicione outros campos conforme necessário */}
+          {cnpjData.email && <p><strong>Email:</strong> {cnpjData.email}</p>}
+          <p><strong>Endereço:</strong> {cnpjData.logradouro}, {cnpjData.numero} - {cnpjData.bairro} ({cnpjData.uf})</p>
         </div>
       )}
     </div>
