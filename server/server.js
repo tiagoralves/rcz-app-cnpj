@@ -13,7 +13,7 @@ app.use(express.json())
 app.post('/verify', async (request, response) => {
   const { captchaValue } = request.body
   const { data } = await axios.post(
-    `https://www.google.com/recaptcha/api/siteverify?secret=${SITE_SECRET}&response=${captchaValue}`,
+    `https://www.google.com/recaptcha/api/siteverify?hl=pt-BR&secret=${SITE_SECRET}&response=${captchaValue}`,
   )
   response.send(data)
 })
