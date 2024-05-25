@@ -3,59 +3,18 @@ import './App.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { isMobile } from 'react-device-detect';
 
+import { formatCNPJ } from './components/formats';
+import { validateCNPJ } from './components/validateRules';
+import CnpjInfo from './components/cnpjInfo';
+
 function App() {
   const recaptcha = useRef();
   const cnpjInputRef = useRef();
-  const [email, setEmail] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [cnpjData, setCnpjData] = useState(null);
   const [isCnpjValid, setIsCnpjValid] = useState(true);
-  
 
-  const formatCNPJ = (value) => {
-    const numbers = value.replace(/\D/g, '');
-    return numbers
-      .replace(/^(\d{2})(\d)/, '$1.$2')
-      .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
-      .replace(/\.(\d{3})(\d)/, '.$1/$2')
-      .replace(/(\d{4})(\d{1,2})$/, '$1-$2');
-  };
-
-  const validateCNPJ = (cnpj) => {
-    cnpj = cnpj.replace(/[^\d]+/g, '');
-
-    if (cnpj === '') return false;
-
-    if (cnpj.length !== 14) return false;
-
-    if (/^(\d)\1{13}$/.test(cnpj)) return false;
-
-    let tamanho = cnpj.length - 2;
-    let numeros = cnpj.substring(0, tamanho);
-    let digitos = cnpj.substring(tamanho);
-    let soma = 0;
-    let pos = tamanho - 7;
-
-    for (let i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--;
-      if (pos < 2) pos = 9;
-    }
-    let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (resultado != digitos.charAt(0)) return false;
-
-    tamanho += 1;
-    numeros = cnpj.substring(0, tamanho);
-    soma = 0;
-    pos = tamanho - 7;
-    for (let i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--;
-      if (pos < 2) pos = 9;
-    }
-    resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (resultado != digitos.charAt(1)) return false;
-
-    return true;
-  };
+  const backendUrl = 'http://localhost:8000';
 
   const handleChange = (event) => {
     let formattedCNPJ = formatCNPJ(event.target.value);
@@ -65,7 +24,7 @@ function App() {
 
   async function submitForm(event) {
     event.preventDefault();
-     let captchaValue = recaptcha.current ? recaptcha.current.getValue() : null;
+    let captchaValue = recaptcha.current ? recaptcha.current.getValue() : null;
     if (!isMobile && !captchaValue) {
       alert('❗❗ Por favor assinale o campo de validação.');
       return;
@@ -86,7 +45,7 @@ function App() {
 
     try {
       if (!isMobile) {
-        const verifyResponse = await fetch('http://localhost:8000/verify', {
+        const verifyResponse = await fetch(`${backendUrl}/verify`, {
           method: 'POST',
           body: JSON.stringify({ captchaValue }),
           headers: {
@@ -101,7 +60,7 @@ function App() {
         }
       }
 
-      let res = await fetch(`http://localhost:8000/cnpj/${cnpjQuery}`);
+      let res = await fetch(`${backendUrl}/cnpj/${cnpjQuery}`);
       let data = await res.json();
       if (res.ok) {
         console.log('Dados do CNPJ:', data);
@@ -116,9 +75,12 @@ function App() {
   }
 
   return (
-    <div>
-      <h1 className='mt-10'>RCZ  |  CNPJ</h1>
-      <form onSubmit={submitForm}>
+    <div className="container bg-black text-white">
+      <h1 className='mt-10 text-[#4eef4e]'>
+        RCZ <span className='text-white'>|</span> CNPJ
+      </h1>
+
+      <form onSubmit={submitForm} className='border border-solid border-white md:p-10 md:w-[27vw]'>
         <input
           name="Cnpj"
           type="text"
@@ -128,31 +90,21 @@ function App() {
           onChange={handleChange}
           inputMode="tel"
           ref={cnpjInputRef}
+          className='bg-black text-white'
         />
         {!isCnpjValid ? (
-            <p className="error-message">Por favor, insira um CNPJ válido.</p>
-          ) : (
-            <p className="empty-message">&nbsp;</p>
-          )}
+          <p className="error-message">Por favor, insira um CNPJ válido.</p>
+        ) : (
+          <p className="empty-message">&nbsp;</p>
+        )}
         <button type="submit">Pesquisar</button>
-       {!isMobile && (
+        {!isMobile && (
           <div className="recaptcha-container">
             <ReCAPTCHA ref={recaptcha} sitekey={process.env.REACT_APP_SITE_KEY} />
           </div>
         )}
       </form>
-      {cnpjData && (
-        <div className='cnpj-info'>
-          <h2>Informações do CNPJ: {cnpjData.cnpj}</h2>
-          <p><strong>Status:</strong> {cnpjData.status}</p>
-          <p><strong>Nome:</strong> {cnpjData.nome}</p>
-          <p><strong>Fantasia:</strong> {cnpjData.fantasia}</p>
-          <p><strong>Abertura:</strong> {cnpjData.abertura}</p>
-          <p><strong>Telefone:</strong> {cnpjData.telefone}</p>
-          {cnpjData.email && <p><strong>Email:</strong> {cnpjData.email}</p>}
-          <p><strong>Endereço:</strong> {cnpjData.logradouro}, {cnpjData.numero} - {cnpjData.bairro} ({cnpjData.uf})</p>
-        </div>
-      )}
+      {cnpjData && <CnpjInfo cnpjData={cnpjData}/>}
     </div>
   );
 }

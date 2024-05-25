@@ -3,79 +3,53 @@
 @tailwind utilities;
 
 body {
-  margin: auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-height: auto;
+  @apply font-sans bg-black;
 }
 
-input, button, form {
-  border: 1px black solid;
+.container {
+  @apply max-w-md mx-auto p-4;
 }
 
-form {
-  padding: 40px;
+input[type="text"] {
+  @apply w-full p-2 mb-2 border border-gray-300 rounded bg-black text-white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input[type="text"]::placeholder {
+  @apply text-gray-400;
 }
 
-/* CSS para tornar o reCAPTCHA responsivo */
-.recaptcha-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+button {
+  @apply block w-full p-3 bg-green-900 text-green-400 border border-white rounded cursor-pointer;
 }
 
-.recaptcha-container > div {
-  transform: scale(0.70); /* Ajuste o valor conforme necessário */
-  transform-origin: 0 0;
-}
-
-/* Ajuste para telas muito pequenas */
-@media (max-width: 320px) {
-  .recaptcha-container > div {
-    transform: scale(0.6);
-    transform-origin: 0 0;
-  }
-}
-
-.cnpj-info {
-  /* margin: 20px; */
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  max-width: 600px;
-}
-
-.cnpj-info h2 {
-  font-size: 24px;
-  /* margin-bottom: 20px; */
-}
-
-.cnpj-info p {
-  margin: 10px 0;
-}
-
-.cnpj-info p strong {
-  color: #333;
+button:hover {
+  @apply bg-green-700;
 }
 
 .error-message {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
+  @apply text-red-500 text-sm mt-1 mb-2;
 }
 
 .empty-message {
-  font-size: 12px;
-  margin-top: 5px;
-  visibility: hidden;
+  @apply text-sm mt-1 mb-2;
+}
+
+.cnpj-info {
+  @apply mt-4;
+}
+
+.recaptcha-container {
+  @apply mt-4;
+  @apply mx-auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  transform: scale(0.77);
+  transform-origin: 0 0;
+}
+
+@media (max-width: 600px) {
+  .container {
+    @apply p-2;
+  }
 }
