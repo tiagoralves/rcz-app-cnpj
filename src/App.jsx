@@ -85,7 +85,8 @@ function App() {
   async function submitForm(event) {
     event.preventDefault();
     let captchaValue = recaptcha.current ? recaptcha.current.getValue() : null;
-    if (!isMobile && !captchaValue) {
+    // if (!isMobile && !captchaValue) {
+    if(!captchaValue){
       alert('❗❗ Por favor assinale o campo de validação.');
       return;
     }
@@ -104,7 +105,7 @@ function App() {
     }
 
     try {
-      if (!isMobile) {
+      // if (!isMobile) {
         const verifyResponse = await fetch(`${backendUrl}/verify`, {
           method: 'POST',
           body: JSON.stringify({ captchaValue }),
@@ -118,7 +119,7 @@ function App() {
           alert('⚠️ ERRO na validação de reCaptcha ⚠️');
           return;
         }
-      }
+      //}
 
       let res = await fetch(`${backendUrl}/cnpj/${cnpjQuery}`);
       let data = await res.json();
@@ -158,11 +159,11 @@ function App() {
           <p className="empty-message">&nbsp;</p>
         )}
         <button type="submit">Pesquisar</button>
-        {!isMobile && (
+        {/* {!isMobile && ( */}
           <div className="recaptcha-container">
             <ReCAPTCHA ref={recaptcha} sitekey={process.env.REACT_APP_SITE_KEY} />
           </div>
-        )}
+        {/* )} */}
       </form>
       {cnpjData && <CnpjInfo cnpjData={cnpjData}/>}
     </div>
