@@ -1,4 +1,4 @@
-export const formatCNPJ = (value) => {
+export const FormatCnpj = (value) => {
     const numbers = value.replace(/\D/g, '');
     return numbers
       .replace(/^(\d{2})(\d)/, '$1.$2')

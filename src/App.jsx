@@ -3,9 +3,9 @@ import './App.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { isMobile } from 'react-device-detect';
 
-import { formatCNPJ } from './components/formats';
-import { validateCNPJ } from './components/validateRules';
-import CnpjInfo from './components/cnpjInfo';
+import { FormatCnpj } from './components/Formats';
+import { validateCNPJ } from './components/ValidateRules';
+import CnpjInfo from './components/CnpjInfo';
 
 function App() {
   const recaptcha = useRef();
@@ -17,7 +17,7 @@ function App() {
   const backendUrl = 'http://localhost:8000';
 
   const handleChange = (event) => {
-    let formattedCNPJ = formatCNPJ(event.target.value);
+    let formattedCNPJ = FormatCnpj(event.target.value);
     setCnpj(formattedCNPJ);
     setIsCnpjValid(validateCNPJ(formattedCNPJ.replace(/\D/g, '')));
   };
