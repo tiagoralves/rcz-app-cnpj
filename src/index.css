@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  @apply max-w-md mx-auto p-4;
+  @apply  max-w-screen-md mx-auto p-4;
 }
 
 input[type="text"] {
@@ -44,7 +44,7 @@ button:hover {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
-  transform: scale(0.77);
+  transform: scale(0.67);
   transform-origin: 0 0;
 }
 
@@ -52,4 +52,51 @@ button:hover {
   .container {
     @apply p-2;
   }
+}
+
+/* Estilos base para a tabela */
+.table-auto {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #201f1f;
+  color: white;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Sombra leve para destacar a tabela */
+}
+
+.table-auto th, .table-auto td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 2px solid #ddd; /* Adiciona uma linha sutil entre as linhas */
+}
+
+/* Estilo para o cabeçalho da tabela */
+.table-auto th {
+  background-color: #0d0d0d; /* Cor de fundo cinza claro para o cabeçalho */
+  color: white;
+  font-weight: bold;
+text-align: center;
+}
+
+/* Cores de fundo alternadas para as linhas da tabela */
+.table-auto tr:nth-child(even) {
+  background-color: #201f1f;
+  color: white;
+}
+
+/* Adicionando hover effect para melhor interatividade */
+.table-auto tr:hover {
+  background-color: #201f1f;
+  color: white;
+}
+
+/* Estilos adicionais para melhorar a legibilidade e a aparência */
+.table-auto {
+  font-size: 0.9rem; /* Reduzir um pouco o tamanho da fonte */
+  color: white; /* Cor de texto escura para contraste */
+}
+
+
+
+form {
+@apply border border-solid border-white md:p-10 md:w-[37vw];
 }

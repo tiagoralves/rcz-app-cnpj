@@ -2,26 +2,52 @@ import { useRef, useState } from 'react';
 import './App.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { isMobile } from 'react-device-detect';
-
-//import { FormatCnpj } from './components/Formats';
-//import { validateCNPJ } from './components/ValidateRules';
-//import CnpjInfo from './components/CnpjInfo';
-
 const CnpjInfo = ({ cnpjData }) => {
   if (!cnpjData) {
     return null
   }
-  
-  return (<div className='cnpj-info text-white'>
-    <h2>Informações do CNPJ: {cnpjData.cnpj}</h2>
-    <p><strong>Status:</strong> {cnpjData.status}</p>
-    <p><strong>Nome:</strong> {cnpjData.nome}</p>
-    <p><strong>Fantasia:</strong> {cnpjData.fantasia}</p>
-    <p><strong>Abertura:</strong> {cnpjData.abertura}</p>
-    <p><strong>Telefone:</strong> {cnpjData.telefone}</p>
-    {cnpjData.email && <p><strong>Email:</strong> {cnpjData.email}</p>}
-    <p><strong>Endereço:</strong> {cnpjData.logradouro}, {cnpjData.numero} <br /> {cnpjData.municipio}, {cnpjData.bairro} ({cnpjData.uf})</p>
-  </div>);
+
+  return (
+    <table className="table-auto">
+      <thead>
+        <tr>
+          <th colSpan={2}>Informações do CNPJ: {cnpjData.cnpj}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="first-cell">Status:</td>
+          <td>{cnpjData.status}</td>
+        </tr>
+        <tr>
+          <td className="first-cell">Nome:</td>
+          <td>{cnpjData.nome}</td>
+        </tr>
+        <tr>
+          <td className="first-cell">Fantasia:</td>
+          <td>{cnpjData.fantasia}</td>
+        </tr>
+        <tr>
+          <td className="first-cell">Abertura:</td>
+          <td>{cnpjData.abertura}</td>
+        </tr>
+        <tr>
+          <td className="first-cell">Telefone:</td>
+          <td>{cnpjData.telefone}</td>
+        </tr>
+        {cnpjData.email && (
+          <tr>
+            <td className="first-cell" >E-mail:</td>
+            <td>{cnpjData.email}</td>
+          </tr>
+        )}
+        <tr>
+          <td className="first-cell">Endereço:</td>
+          <td>{`${cnpjData.logradouro}, ${cnpjData.numero} ${cnpjData.municipio}, ${cnpjData.bairro} (${cnpjData.uf})`}</td>
+        </tr>
+      </tbody>
+    </table>
+  );
 }
 
 const validateCNPJ = (cnpj) => {
@@ -141,7 +167,7 @@ function App() {
         RCZ <span className='text-white'>|</span> CNPJ
       </h1>
 
-      <form onSubmit={submitForm} className='border border-solid border-white md:p-10 md:w-[27vw]'>
+      <form onSubmit={submitForm}>
         <input
           name="Cnpj"
           type="text"
