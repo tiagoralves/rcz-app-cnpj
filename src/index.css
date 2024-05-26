@@ -54,46 +54,46 @@ button:hover {
   }
 }
 
-/* Estilos base para a tabela */
 .table-auto {
   @apply w-auto;
   width: 100%;
   border-collapse: collapse;
   background-color: #201f1f;
   color: white;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Sombra leve para destacar a tabela */
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); 
 }
 
 .table-auto th, .table-auto td {
   padding: 10px;
   text-align: left;
-  border-bottom: 2px solid #ddd; /* Adiciona uma linha sutil entre as linhas */
+  border-bottom: 2px solid #ddd; 
 }
 
-/* Estilo para o cabeçalho da tabela */
+
 .table-auto th {
-  background-color: #0d0d0d; /* Cor de fundo cinza claro para o cabeçalho */
+@apply text-[0.83rem] md:text-[1.65rem];
+  background-color: #0d0d0d; 
   color: white;
   font-weight: bold;
-text-align: center;
+  text-align: center;
 }
 
-/* Cores de fundo alternadas para as linhas da tabela */
+
 .table-auto tr:nth-child(even) {
   background-color: #201f1f;
   color: white;
 }
 
-/* Adicionando hover effect para melhor interatividade */
+
 .table-auto tr:hover {
   background-color: #201f1f;
   color: white;
 }
 
-/* Estilos adicionais para melhorar a legibilidade e a aparência */
+
 .table-auto {
-  @apply text-[0.7rem] md:text-[1rem]; /* Reduzir um pouco o tamanho da fonte */
-  color: white; /* Cor de texto escura para contraste */
+  @apply text-[0.7rem] md:text-[1rem]; 
+  color: white; 
 }
 
 form {

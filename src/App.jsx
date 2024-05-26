@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import './App.css';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { isMobile } from 'react-device-detect';
 const CnpjInfo = ({ cnpjData }) => {
   if (!cnpjData) {
     return null
@@ -100,7 +99,7 @@ function App() {
   const [cnpjData, setCnpjData] = useState(null);
   const [isCnpjValid, setIsCnpjValid] = useState(true);
 
-  const backendUrl = 'http://localhost:8000';
+  const backendUrl = 'http://localhost:8899';
 
   const handleChange = (event) => {
     let formattedCNPJ = FormatCnpj(event.target.value);
@@ -111,7 +110,6 @@ function App() {
   async function submitForm(event) {
     event.preventDefault();
     let captchaValue = recaptcha.current ? recaptcha.current.getValue() : null;
-    // if (!isMobile && !captchaValue) {
     if(!captchaValue){
       alert('❗❗ Por favor assinale o campo de validação.');
       return;
@@ -131,7 +129,6 @@ function App() {
     }
 
     try {
-      // if (!isMobile) {
         const verifyResponse = await fetch(`${backendUrl}/verify`, {
           method: 'POST',
           body: JSON.stringify({ captchaValue }),
@@ -145,7 +142,6 @@ function App() {
           alert('⚠️ ERRO na validação de reCaptcha ⚠️');
           return;
         }
-      //}
 
       let res = await fetch(`${backendUrl}/cnpj/${cnpjQuery}`);
       let data = await res.json();
@@ -185,11 +181,9 @@ function App() {
           <p className="empty-message">&nbsp;</p>
         )}
         <button type="submit">Pesquisar</button>
-        {/* {!isMobile && ( */}
           <div className="recaptcha-container">
             <ReCAPTCHA ref={recaptcha} sitekey={process.env.REACT_APP_SITE_KEY} />
           </div>
-        {/* )} */}
       </form>
       {cnpjData && <CnpjInfo cnpjData={cnpjData}/>}
     </div>
