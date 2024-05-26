@@ -92,7 +92,7 @@ text-align: center;
 
 /* Estilos adicionais para melhorar a legibilidade e a aparência */
 .table-auto {
-  font-size: 0.9rem; /* Reduzir um pouco o tamanho da fonte */
+  @apply text-[0.7rem] md:text-[1rem]; /* Reduzir um pouco o tamanho da fonte */
   color: white; /* Cor de texto escura para contraste */
 }
 
