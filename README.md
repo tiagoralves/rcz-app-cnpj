@@ -1,5 +1,22 @@
 # RCZ App CNPJ
 
+## Índice
+- [RCZ App CNPJ](#rcz-app-cnpj)
+  - [Índice](#índice)
+  - [Versão mobile](#versão-mobile)
+  - [Descrição](#descrição)
+  - [Pré-requisitos](#pré-requisitos)
+  - [Instalação](#instalação)
+    - [Acessando a pasta do projeto](#acessando-a-pasta-do-projeto)
+    - [Configurando o projeto local](#configurando-o-projeto-local)
+    - [Configurando BackEnd:](#configurando-backend)
+    - [Configuração do FrontEnd Localmente](#configuração-do-frontend-localmente)
+  - [Erros, exceções e considerações técnicas](#erros-exceções-e-considerações-técnicas)
+    - [Erros](#erros)
+    - [Excessão](#excessão)
+    - [Consideração técnica](#consideração-técnica)
+
+## Versão mobile
 ![Imagem Mobile](./public/images/img_mobile.jpg)
 
 ## Descrição
