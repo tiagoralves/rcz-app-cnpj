@@ -81,10 +81,15 @@ Failed to submit form. Please try again later.
 ### Excessão
 6. Embora tenha sido desenvolvida com principios de responsividade, esta aplicação não funciona em dispositivos móveis, pois os navegadores mobile não identificam a segurança necessária da aplicação backend (localhost:8899).
 
+7. Todos componentes estão organizados no mesmo arquivo (App.js) pois o servidor web (Vercel) apresentou erro na interpretação de componentes separados por arquivo.
+
 ### Consideração técnica
 
-7. Todos componentes estão organizados no mesmo arquivo (App.js) pois o servidor web (Vercel) apresentou erro na interpretação de componentes separados por arquivo.
-8. Foi usado conventional commit, para manter padrão no envio dos códigos.
+8. Principais técnicas de desenvolvimento de sistemas aplicadas:
+  - Segurança: Completely Automated Public Turing test to tell Computers and Humans Apart
+  - Conventional commit;
+  - DRY;
+  - Clean Code.
 
 
 
