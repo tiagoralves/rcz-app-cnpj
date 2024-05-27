@@ -3,21 +3,25 @@
 ## Índice
 - [RCZ App CNPJ](#rcz-app-cnpj)
   - [Índice](#índice)
-  - [Versão mobile](#versão-mobile)
+  - [Versão Desktop](#versão-desktop)
+  - [Versão Mobile](#versão-mobile)
   - [Descrição](#descrição)
   - [Pré-requisitos](#pré-requisitos)
   - [Instalação](#instalação)
-    - [Acessando a pasta do projeto](#acessando-a-pasta-do-projeto)
-    - [Configurando o projeto local](#configurando-o-projeto-local)
-    - [Configurando BackEnd:](#configurando-backend)
+    - [Acesse a pasta do projeto](#acesse-a-pasta-do-projeto)
+  - [Configure o projeto local](#configure-o-projeto-local)
+    - [BackEnd](#backend)
+      - [Acesse a aplicação online](#acesse-a-aplicação-online)
     - [Configuração do FrontEnd Localmente](#configuração-do-frontend-localmente)
   - [Erros, exceções e considerações técnicas](#erros-exceções-e-considerações-técnicas)
     - [Erros](#erros)
     - [Excessão](#excessão)
     - [Consideração técnica](#consideração-técnica)
 
-## Versão mobile
-![Imagem Mobile](./public/images/img_mobile.jpg)
+## Versão Desktop
+![Imagem Desktop](./public/images/RCZ_CNPJ_DESKTOP.png)
+## Versão Mobile
+![Imagem Mobile](./public/images/RCZ_CNPJ_MOBILE.jpg)
 
 ## Descrição
 
@@ -37,25 +41,25 @@ Clone o repositório:
 git clone git@github.com:tiagoralves/rcz-app-cnpj.git
 ``` 
 
-### Acessando a pasta do projeto
+### Acesse a pasta do projeto
 ```bash
 cd rcz-app-cnpj
 ```
 
-### Configurando o projeto local
+## Configure o projeto local
 
 1. Instalando as dependencias do projeto:
 ```bash
 npm install
 ```
 
-### Configurando BackEnd:
+### BackEnd
 
-2. Iniciando o Servidor Backend localmente:
+2. Inicie o Servidor Backend localmente:
 ```bash
   npm run backend
 ```
-3. Acesse a aplicação online:
+#### Acesse a aplicação online
 3.1. Assim que o servidor backend estiver rodando na maquina local (porta 8899), a aplicação web pode ser acessada [neste endereço](https://rcz-app-cnpj.vercel.app/).
 
 ### Configuração do FrontEnd Localmente
@@ -64,7 +68,7 @@ npm install
 ```bash
   npm run frontend
 ```
-  4.1. Acesse a aplicação localmente em: localhost:3000
+  4.1. Acesse a aplicação localmente em: localhost:8899
 
 
 ## Erros, exceções e considerações técnicas
