@@ -86,7 +86,7 @@ Failed to submit form. Please try again later.
 ### Consideração técnica
 
 8. Principais técnicas de desenvolvimento de sistemas aplicadas:
-  - Segurança: Completely Automated Public Turing test to tell Computers and Humans Apart
+  - Segurança: Completely Automated Public Turing test to tell Computers and Humans Apart;
   - Conventional commit;
   - DRY;
   - Clean Code.
