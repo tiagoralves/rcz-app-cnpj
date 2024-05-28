@@ -82,10 +82,11 @@ Failed to submit form. Please try again later.
 6. Embora tenha sido desenvolvida com principios de responsividade, esta aplicação não funciona em dispositivos móveis, pois os navegadores mobile não identificam a segurança necessária da aplicação backend (localhost:8899).
 
 7. Todos componentes estão organizados no mesmo arquivo (App.js) pois o servidor web (Vercel) apresentou erro na interpretação de componentes separados por arquivo.
+8. Em uma aplicação real o arquivo .env não seria enviado ao repositório remoto, neste caso as credenciais foram criadas para este projeto.
 
 ### Consideração técnica
 
-8. Principais técnicas de desenvolvimento de sistemas aplicadas:
+9. Principais técnicas de desenvolvimento de sistemas aplicadas:
   - Segurança: Completely Automated Public Turing test to tell Computers and Humans Apart;
   - Conventional commit;
   - DRY;
